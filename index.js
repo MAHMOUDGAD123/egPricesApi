@@ -1,6 +1,7 @@
 import experss from "express";
 import cors from "cors";
-import cheerio from "cheerio";
+import { load } from "cheerio";
+import { text_parser_map } from "./utils.js";
 
 const app = experss();
 const port = process.env.PORT || 3000;
@@ -564,7 +565,7 @@ const data_map = new Map([
 /**
  * fetch & get html document
  * @param {URL} url the url object
- * @returns
+ * @returns {Promise<string> | null}
  */
 const get_html = async (url) => {
   const res = await fetch(url, {
@@ -594,12 +595,12 @@ const get_prices = async (key) => {
       if (html) {
         // console.log("-->", _url.hostname, "✔️");
         // console.log("----------------------------");
-        const $ = cheerio.load(html);
+        const $ = load(html);
 
         for (const [prop, sel] of prop_sel) {
           const ele = $(sel);
           if (ele) {
-            prices[prop] = Number.parseFloat(ele.text().replace(",", ""));
+            prices[prop] = text_parser_map.get(key)(ele.text());
             // console.log(prop, "✅");
           }
           // else {
@@ -612,7 +613,7 @@ const get_prices = async (key) => {
       // }
       // console.log("----------------------------\n");
     }
-    // console.error("SUCCESS 🆗\n");
+    // console.log("SUCCESS 🆗\n");
   } catch (e) {
     console.error("ERROR ❌: ", e.message);
     return null;
