@@ -15,11 +15,13 @@ const handler = async (path, res) => {
   const worker = new Worker(`./workers/${path}.js`, { workerData: { path } });
 
   worker.on("message", (data) => {
+    console.log("done");
     const code = data ? 200 : 404;
     res.status(code).json(response);
   });
 
-  worker.on("error", () => {
+  worker.on("error", (err) => {
+    console.log(err.message);
     res.status(404).json(null);
   });
 };
