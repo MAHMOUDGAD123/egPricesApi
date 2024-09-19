@@ -1,6 +1,6 @@
 const experss = require("express");
 const cors = require("cors");
-const { Worker } = require("node:worker_threads");
+const { Worker } = require("worker_threads");
 
 const app = experss();
 const port = process.env.PORT || 3000;
@@ -8,25 +8,27 @@ const port = process.env.PORT || 3000;
 /**
  * endpoints handler
  * @param {string} path the api endpoint
- * @param {Response} res the response
+ * @param {Response} res the server response
  */
-const handler = async (path, res) => {
+const handler = (path, res) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  const worker = new Worker(`./workers/${path}.js`, { workerData: { path } });
+  const worker = new Worker(`./worker.js`, { workerData: { path } });
 
   worker.on("message", (data) => {
-    // console.log("done");
-    const code = data ? 200 : 404;
+    console.log("message received");
+    console.log("Data:", data);
+    const code = data ? 200 : 500;
     res.status(code).json(data);
   });
 
   worker.on("error", (err) => {
-    // console.log("--------------------------");
-    // console.log(err.message);
-    // console.log(err.name);
-    // console.log(err.stack);
-    // console.log("--------------------------");
-    res.status(404).json(null);
+    console.log("error");
+    console.log("--------------------------");
+    console.log(err.message);
+    console.log(err.name);
+    console.log(err.stack);
+    console.log("--------------------------");
+    res.status(500).json(null);
   });
 };
 
