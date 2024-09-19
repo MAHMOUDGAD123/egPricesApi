@@ -1,4 +1,6 @@
-import { parentPort, workerData } from "node:worker_threads";
-import { get_prices } from "../api.js";
+const { parentPort, workerData } = require("node:worker_threads");
+const { get_prices } = require("../api.js");
 
-parentPort.postMessage(await get_prices(workerData.path));
+(async () => {
+  parentPort.postMessage(await get_prices(workerData.path));
+})();

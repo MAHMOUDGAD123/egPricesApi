@@ -1,4 +1,4 @@
-import cheerio from "cheerio";
+const cheerio = require("cheerio");
 
 const data_map = new Map([
   [
@@ -615,4 +615,4 @@ const get_prices = async (key) => {
   return prices;
 };
 
-export { get_prices };
+module.exports = { get_prices };

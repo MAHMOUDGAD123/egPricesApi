@@ -1,6 +1,6 @@
-import experss from "express";
-import cors from "cors";
-import { Worker } from "node:worker_threads";
+const experss = require("express");
+const cors = require("cors");
+const { Worker } = require("node:worker_threads");
 
 const app = experss();
 const port = process.env.PORT || 3000;
@@ -15,13 +15,17 @@ const handler = async (path, res) => {
   const worker = new Worker(`./workers/${path}.js`, { workerData: { path } });
 
   worker.on("message", (data) => {
-    console.log("done");
+    // console.log("done");
     const code = data ? 200 : 404;
-    res.status(code).json(response);
+    res.status(code).json(data);
   });
 
   worker.on("error", (err) => {
-    console.log(err.message);
+    // console.log("--------------------------");
+    // console.log(err.message);
+    // console.log(err.name);
+    // console.log(err.stack);
+    // console.log("--------------------------");
     res.status(404).json(null);
   });
 };
