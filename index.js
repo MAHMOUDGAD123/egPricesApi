@@ -1,10 +1,12 @@
-const cheerio = require("cheerio");
-const app = require("express")();
-const cors = require("cors");
+import cheerio from "cheerio";
+import experss from "express";
+import cors from "cors";
+
+const app = experss();
 const port = process.env.PORT || 3000;
 
 const gold_map = [
-   // gold
+  // gold
   [
     "https://egcurrency.com/en/gold/egp",
     [
@@ -580,7 +582,7 @@ const get_live = async () => {
           if (ele) {
             prices[prop] = ele.text().replace(",", "");
             // console.log("-", prop, "✅");
-          } 
+          }
           // else {
           //   console.log(prop, "✖️");
           // }
