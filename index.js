@@ -161,7 +161,7 @@ const silver_map = [
   ],
 ];
 
-const map = [
+const other_map = [
   // sagha usd
   [
     "https://egcurrency.com/en/currency/egp/gold",
@@ -444,19 +444,20 @@ const live = [
   ],
 ];
 
-// get data
+// fetch & get html
 const get_html = async (url) => {
   const res = await fetch(url, {
     method: "GET",
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
-      "Access-Control-Allow-Methods": "POST, GET",
+      "Access-Control-Allow-Methods": "GET",
     },
   });
   return res.ok ? res.text() : null;
 };
 
+// dom & get prices
 const get_gold = async () => {
   const prices = {};
   try {
@@ -532,7 +533,7 @@ const get_silver = async () => {
 const get_prices = async () => {
   const prices = {};
   try {
-    for (const [url, prop_sel] of map) {
+    for (const [url, prop_sel] of other_map) {
       const _url = new URL(url);
       const html = await get_html(_url);
 
@@ -601,40 +602,33 @@ const get_live = async () => {
   return prices;
 };
 
-const gold_handler = async (_, res) => {
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  const response = await get_gold();
-  const code = response ? 200 : 404;
-  res.status(code).json(response);
-};
+// handler
+const getters_map = new Map([
+  ["/", get_prices],
+  ["/prices", get_prices],
+  ["/gold", get_gold],
+  ["/silver", get_silver],
+  ["/live", get_live],
+]);
 
-const silver_handler = async (_, res) => {
+/**
+ * get data handler using a (getter_map)
+ * @param {string} path the api endpoint
+ * @param {*} res the response
+ */
+const handler = async (path, res) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  const response = await get_silver();
-  const code = response ? 200 : 404;
-  res.status(code).json(response);
-};
-
-const prices_handler = async (_, res) => {
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  const response = await get_prices();
-  const code = response ? 200 : 404;
-  res.status(code).json(response);
-};
-
-const live_handler = async (_, res) => {
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  const response = await get_live();
+  const response = await getters_map.get(path)();
   const code = response ? 200 : 404;
   res.status(code).json(response);
 };
 
 app.use(cors());
-app.get("/", prices_handler);
-app.get("/gold", gold_handler);
-app.get("/silver", silver_handler);
-app.get("/prices", prices_handler);
-app.get("/live", live_handler);
+app.get("/", (_, res) => handler("/", res));
+app.get("/prices", (_, res) => handler("/prices", res));
+app.get("/gold", (_, res) => handler("/gold", res));
+app.get("/silver", (_, res) => handler("/silver", res));
+app.get("/live", (_, res) => handler("/live", res));
 
 app.listen(port, () => {
   console.log("Listening on port: " + port, "\n");
