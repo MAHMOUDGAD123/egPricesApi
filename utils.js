@@ -3,7 +3,7 @@
  * @param {string} text
  */
 const parse_float_no_comma = (text) => {
-  return Number.parseFloat(text.replace(",", ""));
+  return Number.parseFloat(text?.replace(",", ""));
 };
 
 /**
@@ -18,8 +18,8 @@ const prices_parser = (text) => parse_float_no_comma(text);
  */
 const live_parser = (text) => {
   return text.startsWith("(")
-    ? text.slice(1, text.length - 1)
-    : text.startsWith("+")
+    ? text?.slice(1, text.length - 1)
+    : text?.startsWith("+")
     ? text
     : parse_float_no_comma(text);
 };
