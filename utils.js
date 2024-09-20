@@ -19,7 +19,7 @@ const prices_parser = (text) => parse_float_no_comma(text);
 const live_parser = (text) => {
   return text.startsWith("(")
     ? text.slice(1, text.length - 1)
-    : text.startsWith("+")
+    : text.startsWith("+") || text.startsWith("-")
     ? text
     : parse_float_no_comma(text);
 };
