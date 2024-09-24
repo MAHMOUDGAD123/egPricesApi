@@ -1,5 +1,5 @@
 import { load } from "cheerio";
-import { text_parser_map } from "./utils.mjs";
+import { text_parser_map } from "./utils.js";
 
 // urls & dom data
 const data_map = new Map([
