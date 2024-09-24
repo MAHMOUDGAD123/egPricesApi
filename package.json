@@ -5,8 +5,7 @@
   "main": "index.mjs",
   "type": "module",
   "scripts": {
-    "start": "node index.mjs",
-    "dev": "nodemon index.mjs"
+    "start": "node index.mjs"
   },
   "keywords": [],
   "author": "MG",

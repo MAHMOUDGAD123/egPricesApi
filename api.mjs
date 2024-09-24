@@ -564,7 +564,13 @@ const data_map = new Map([
  * @returns {Promise<string> | null}
  */
 const get_html = async (url) => {
-  const res = await fetch(url);
+  const res = await fetch(url, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Methods": "GET",
+    },
+  });
   return res.ok ? res.text() : null;
 };
 
