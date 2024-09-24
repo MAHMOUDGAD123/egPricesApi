@@ -2,10 +2,11 @@
   "name": "eg_prices_api",
   "version": "2.0.0",
   "description": "app to get the prices in Egypt",
-  "main": "index.mjs",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.mjs"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "MG",

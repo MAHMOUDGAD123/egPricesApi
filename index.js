@@ -1,6 +1,6 @@
 import experss from "express";
 import cors from "cors";
-import { get_prices } from "./api.mjs";
+import { get_prices } from "./api.js";
 import expressCache from "cache-express";
 
 const app = experss();
