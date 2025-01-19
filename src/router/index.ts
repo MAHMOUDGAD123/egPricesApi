@@ -21,7 +21,6 @@ const getDataHandler = async (key: Types.PricesKey, res: ExpressResponse) => {
 if (import.meta.env.DEV) {
   // DEV
   router.use((req, _, next) => {
-    console.log("Origin:", req.headers.origin);
     console.log("Request Headers:", req.headers);
     next();
   });

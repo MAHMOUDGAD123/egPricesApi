@@ -5,7 +5,6 @@ export const CORS_OPTIONS: CorsOptions = {
     /https:\/\/egypt-prices.netlify.app/, // PROD
     /http:\/\/localhost:\d{4}/, // DEV
   ],
-  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
   methods: ["GET"],
   optionsSuccessStatus: 200,

@@ -563,15 +563,19 @@ const data_map = new Map<Types.PricesKey, (string | string[][])[][]>([
  * @param url the url object
  */
 const get_html = async (url: URL) => {
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-    },
-  });
-  console.log({ status: res.status, statusTxt: res.statusText });
-  return res.ok ? res.text() : null;
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+      },
+    });
+    console.log({ status: res.status, statusTxt: res.statusText });
+    return res.ok ? res.text() : null;
+  } catch (error) {
+    return null;
+  }
 };
 
 /**
