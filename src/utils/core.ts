@@ -563,12 +563,15 @@ const data_map = new Map<Types.PricesKey, (string | string[][])[][]>([
  * @param url the url object
  */
 const get_html = async (url: URL) => {
-  try {
-    const res = await fetch(url);
-    return res.ok ? res.text() : null;
-  } catch (error) {
-    return null;
-  }
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    },
+  });
+  console.log({ status: res.status, statusTxt: res.statusText });
+  return res.ok ? res.text() : null;
 };
 
 /**
@@ -592,9 +595,9 @@ const get_prices = async (key: Types.PricesKey) => {
           const ele = $(sel);
           if (ele) {
             prices[prop!] = text_parser_map.get(key)!(ele.text());
-            console.log(prop, "✅");
+            console.log(prop, "🟩");
           } else {
-            console.log(prop, "❌");
+            console.log(prop, "🟥");
           }
         }
       } else {

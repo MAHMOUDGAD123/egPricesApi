@@ -18,6 +18,15 @@ const getDataHandler = async (key: Types.PricesKey, res: ExpressResponse) => {
   res.status(code).json(data);
 };
 
+if (import.meta.env.DEV) {
+  // DEV
+  router.use((req, _, next) => {
+    console.log("Origin:", req.headers.origin);
+    console.log("Request Headers:", req.headers);
+    next();
+  });
+}
+
 // routes
 router.get("/live", (_, res) => getDataHandler("live", res));
 router.use(expressCache(expressCacheOptions));
