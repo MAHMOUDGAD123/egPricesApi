@@ -603,11 +603,12 @@ const get_prices = async (key: Types.PricesKey) => {
       console.log("----------------------------\n");
     }
     console.log("SUCCESS 🆗\n");
+    // return null if the object has no keys at all
+    return Object.keys(prices).length === 0 ? null : prices;
   } catch (err) {
     console.error("ERROR ❌: ", (err as Error).message);
     return null;
   }
-  return prices;
 };
 
 export { get_prices };

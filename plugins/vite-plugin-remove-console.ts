@@ -5,6 +5,10 @@ export const removeConsolePlugin = (): Plugin => ({
   enforce: "pre", // Run this before other plugins
   transform(code, id) {
     // Only transform JavaScript/TypeScript files
+    if (process.env.NODE_ENV !== "production") {
+      return null;
+    }
+
     if (/\.(?:js|ts)$/.test(id)) {
       // Remove console.log statements
       const transformedCode = code.replace(
