@@ -6,7 +6,7 @@ export const CORS_OPTIONS: CorsOptions = {
     /http:\/\/localhost:\d{4}/, // DEV
   ],
   credentials: true,
-  methods: ["GET"],
+  methods: ["GET", "POST"],
   optionsSuccessStatus: 200,
 };
 
