@@ -1,8 +1,8 @@
 import { load } from "cheerio";
-import { text_parser_map } from "./utils.js";
+import { text_parser_map } from "./tools";
 
 // urls & dom data
-const data_map = new Map([
+const data_map = new Map<Types.PricesKey, (string | string[][])[][]>([
   [
     "gold",
     [
@@ -560,51 +560,47 @@ const data_map = new Map([
 
 /**
  * fetch & get html document
- * @param {URL} url the url object
- * @returns {Promise<string> | null}
+ * @param url the url object
  */
-const get_html = async (url) => {
+const get_html = async (url: URL) => {
   const res = await fetch(url);
   return res.ok ? res.text() : null;
 };
 
 /**
  * dom & get prices
- * @param {string} key to get the data for a specific endpoint
- * @returns {Promise<(string | string[][])[][] | null>}
+ * @param key to get the data for a specific endpoint
  */
-const get_prices = async (key) => {
-  const prices = {};
+const get_prices = async (key: Types.PricesKey) => {
+  const prices = Object.create(null);
 
   try {
-    for (const [url, prop_sel] of data_map.get(key)) {
-      const _url = new URL(url);
+    for (const [url, prop_sel] of data_map.get(key)!) {
+      const _url = new URL(url!);
       const html = await get_html(_url);
 
       if (html) {
-        // console.log("-->", _url.hostname, "✔️");
-        // console.log("----------------------------");
+        console.log("-->", _url.hostname, "✔️");
+        console.log("----------------------------");
         const $ = load(html);
 
-        for (const [prop, sel] of prop_sel) {
+        for (const [prop, sel] of prop_sel!) {
           const ele = $(sel);
           if (ele) {
-            prices[prop] = text_parser_map.get(key)(ele.text());
-            // console.log(prop, "✅");
+            prices[prop!] = text_parser_map.get(key)!(ele.text());
+            console.log(prop, "✅");
+          } else {
+            console.log(prop, "❌");
           }
-          // else {
-          //   console.log(prop, "❌");
-          // }
         }
+      } else {
+        console.log(_url.hostname, "✖️");
       }
-      // else {
-      //   console.log(_url.hostname, "✖️");
-      // }
-      // console.log("----------------------------\n");
+      console.log("----------------------------\n");
     }
-    // console.log("SUCCESS 🆗\n");
-  } catch (e) {
-    console.error("ERROR ❌: ", e.message);
+    console.log("SUCCESS 🆗\n");
+  } catch (err) {
+    console.error("ERROR ❌: ", (err as Error).message);
     return null;
   }
   return prices;

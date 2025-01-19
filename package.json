@@ -2,28 +2,42 @@
   "name": "eg_prices_api",
   "version": "2.0.0",
   "description": "app to get the prices in Egypt",
-  "main": "index.js",
+  "private": true,
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "clean": "rimraf ./api/index.js",
+    "start": "node --no-deprecation ./api/index.js",
+    "dev": "vite",
+    "build": "vite build",
+    "vercel-build": "echo vercel building..."
   },
-  "keywords": [],
+  "keywords": [
+    "Egypt Prices",
+    "EGPrices",
+    "Silver",
+    "Gold"
+  ],
   "author": "MG",
   "license": "ISC",
-  "engines": {
-    "node": "20.x"
-  },
   "dependencies": {
     "cache-express": "^1.0.2",
-    "cheerio": "^1.0.0-rc.12",
+    "cheerio": "^1.0.0",
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "express": "^4.21.2"
   },
   "devDependencies": {
+    "@howiefh/ant-path-matcher": "^0.0.4",
+    "@swc/core": "^1.10.6",
     "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/nodemon": "^1.19.6",
-    "nodemon": "^3.1.5"
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "chokidar": "^4.0.3",
+    "esbuild": "^0.24.0",
+    "rimraf": "^6.0.1",
+    "tslib": "^2.7.0",
+    "typescript": "^5.6.2",
+    "vite": "^6.0.7",
+    "vite-plugin-node": "^4.0.0",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }
