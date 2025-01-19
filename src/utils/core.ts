@@ -563,8 +563,12 @@ const data_map = new Map<Types.PricesKey, (string | string[][])[][]>([
  * @param url the url object
  */
 const get_html = async (url: URL) => {
-  const res = await fetch(url);
-  return res.ok ? res.text() : null;
+  try {
+    const res = await fetch(url);
+    return res.ok ? res.text() : null;
+  } catch (error) {
+    return null;
+  }
 };
 
 /**
