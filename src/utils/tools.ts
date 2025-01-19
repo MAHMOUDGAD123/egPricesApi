@@ -14,10 +14,6 @@ const parse_float_no_comma = (text: string) => {
  */
 const prices_parser = (text: string) => parse_float_no_comma(text);
 
-/**
- * text parser for live only
- * @param text
- */
 // investing.com
 // const live_parser = (text: string) => {
 //   return text.startsWith("(")
@@ -26,15 +22,24 @@ const prices_parser = (text: string) => parse_float_no_comma(text);
 //     ? text
 //     : parse_float_no_comma(text);
 // };
+
 // twelvedata.com
+/**
+ * text parser for live only
+ * @param text the textContent of the element
+ * @param element the element itself
+ * @param name the name of the porperty
+ */
 const live_parser = (text: string, element: Cheerio<any>, name: string) => {
   const parsedNumber = parse_float_no_comma(text);
   if (!name.includes("delta")) {
     return parsedNumber;
   }
   const isMinus = element.parent().hasClass("stats-symbol-price-diff--down");
-  const isPercentage = text.includes("%");
-  return (isMinus ? "-" : "+") + parsedNumber + (isPercentage ? "%" : "");
+  if (text.includes("%")) {
+    return `(${isMinus ? "-" : "+"}${parsedNumber}%)`;
+  }
+  return `${isMinus ? "-" : "+"}${parsedNumber}`;
 };
 
 const text_parser_map = new Map<
