@@ -520,45 +520,45 @@ const data_map = new Map<Types.PricesKey, (string | string[][])[][]>([
     [
       // XAU-USD
       [
-        // "https://www.investing.com/currencies/xau-usd",
-        "https://twelvedata.com/markets/300755/commodity/xau-usd",
+        "https://www.investing.com/currencies/xau-usd",
+        // "https://twelvedata.com/markets/300755/commodity/xau-usd",
         [
           [
             "xau_usd",
-            // 'div[data-test="instrument-header-details"] div[data-test="instrument-price-last"]',
-            ".stats-symbol-price>span:nth-child(1)",
+            'div[data-test="instrument-header-details"] div[data-test="instrument-price-last"]',
+            // ".stats-symbol-price>span:nth-child(1)",
           ],
           [
             "xau_usd_delta",
-            // 'div[data-test="instrument-header-details"] [data-test="instrument-price-change"]',
-            ".stats-symbol-price-diff>:first-child", // stats-symbol-price-diff--down
+            'div[data-test="instrument-header-details"] [data-test="instrument-price-change"]',
+            // ".stats-symbol-price-diff>:first-child", // stats-symbol-price-diff--down
           ],
           [
             "xau_usd_delta_pt",
-            // 'div[data-test="instrument-header-details"] [data-test="instrument-price-change-percent"]',
-            ".stats-symbol-price-diff>:last-child", // stats-symbol-price-diff--down
+            'div[data-test="instrument-header-details"] [data-test="instrument-price-change-percent"]',
+            // ".stats-symbol-price-diff>:last-child", // stats-symbol-price-diff--down
           ],
         ],
       ],
       // USD_EGP
       [
-        // "https://www.investing.com/currencies/usd-egp",
-        "https://twelvedata.com/markets/838667/forex/usd-egp",
+        "https://www.investing.com/currencies/usd-egp",
+        // "https://twelvedata.com/markets/838667/forex/usd-egp",
         [
           [
             "usd_egp",
-            // 'div[data-test="instrument-header-details"] div[data-test="instrument-price-last"]',
-            ".stats-symbol-price>span:nth-child(1)",
+            'div[data-test="instrument-header-details"] div[data-test="instrument-price-last"]',
+            // ".stats-symbol-price>span:nth-child(1)",
           ],
           [
             "usd_egp_delta",
-            // 'div[data-test="instrument-header-details"] [data-test="instrument-price-change"]',
-            ".stats-symbol-price-diff>:first-child", // stats-symbol-price-diff--down
+            'div[data-test="instrument-header-details"] [data-test="instrument-price-change"]',
+            // ".stats-symbol-price-diff>:first-child", // stats-symbol-price-diff--down
           ],
           [
             "usd_egp_delta_pt",
-            // 'div[data-test="instrument-header-details"] [data-test="instrument-price-change-percent"]',
-            ".stats-symbol-price-diff>:last-child", // stats-symbol-price-diff--down
+            'div[data-test="instrument-header-details"] [data-test="instrument-price-change-percent"]',
+            // ".stats-symbol-price-diff>:last-child", // stats-symbol-price-diff--down
           ],
         ],
       ],

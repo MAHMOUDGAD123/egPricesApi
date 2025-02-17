@@ -18,6 +18,12 @@ const getDataHandler = async (key: Types.PricesKey, res: ExpressResponse) => {
   res.status(code).json(data);
 };
 
+router.get("/", async (_, res) => {
+  res.status(200).json({
+    msg: "Welcome to EGPrices API",
+  });
+});
+
 // routes
 router.get("/live", (_, res) => getDataHandler("live", res));
 router.use(expressCache(expressCacheOptions));
