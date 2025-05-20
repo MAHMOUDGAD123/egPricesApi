@@ -37,7 +37,7 @@ const live_parser = (text: string, element: Cheerio<any>, name: string) => {
   }
   const isMinus = element.parent().hasClass("stats-symbol-price-diff--down");
   if (text.includes("%")) {
-    return `(${isMinus ? "-" : "+"}${parsedNumber}%)`;
+    return `${isMinus ? "-" : "+"}${parsedNumber}`;
   }
   return `${isMinus ? "-" : "+"}${parsedNumber}`;
 };
