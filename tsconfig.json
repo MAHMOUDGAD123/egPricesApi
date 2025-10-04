@@ -5,15 +5,14 @@
     /* Language and Environment */
     "target": "ESNext",
     "importHelpers": true,
-    "baseUrl": "./",
     "paths": {
-      "tslib": ["node_modules/tslib/tslib.d.ts"],
-      "@/*": ["src/*"]
+      "tslib": ["./node_modules/tslib/tslib.d.ts"],
+      "@/*": ["./src/*"]
     },
     "lib": ["esnext"],
 
     /* Modules */
-    "rootDir": "./src",
+    "rootDir": ".",
     "skipDefaultLibCheck": false,
     "sourceMap": true,
     "preserveWatchOutput": true,
