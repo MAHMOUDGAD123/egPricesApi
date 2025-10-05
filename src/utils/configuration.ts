@@ -20,7 +20,8 @@ export const SESSION_OPTIONS: FastifySessionOptions = {
 
 export const CORS_OPTIONS: FastifyCorsOptions = {
   origin: [
-    // /https:\/\/.+\.netlify\.app/, // PROD (your website)
+    /https:\/\/.+\.netlify\.app/, // PROD
+    "https://egypt-prices.netlify.app/", // Client
     /http:\/\/localhost:\d{4}/, // DEV
   ],
   credentials: true,
