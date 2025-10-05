@@ -1,33 +1,105 @@
-import express, { type Response as ExpressResponse } from "express";
-import cors from "cors";
-import router from "@/router";
+// fastify ecosystem imports
+import fastify, {
+  type FastifyInstance,
+  type FastifyReply,
+  type FastifyRequest,
+} from "fastify";
+import fastifyStatic from "@fastify/static";
+import fastifyView from "@fastify/view";
+import cors from "@fastify/cors";
+import fastifyCookie from "@fastify/cookie";
+import fastifySession from "@fastify/session"; // you can use @fastify/secure-session for Encrypted Session Storage
+import fastifyEnv from "@fastify/env";
+// other imports
+import ejs from "ejs";
+import path from "path";
+// local imports
+import { getPinoConfig } from "@/utils/pino-config";
+import { loggerHooks } from "@/hooks/logger";
+import {
+  CORS_OPTIONS,
+  ENV_OPTIONS,
+  MODE,
+  SESSION_OPTIONS,
+} from "@/utils/configuration";
+// cache
+import { cacheHooks } from "@/hooks/cache";
+// routes
+import { pricesRoutes } from "@/router/prices";
 
-const app = express();
-
-app.use(cors());
-app.use("/api", router);
-
-app.get("/", async (_, res) => {
-  res.status(200).json({
-    msg: "Welcome to EGPrices API",
-  });
+const app: FastifyInstance = fastify({
+  disableRequestLogging: true,
+  logger: getPinoConfig(MODE),
 });
 
-app.get("*", async (_, res: ExpressResponse) => {
-  res.sendStatus(404);
+app.register(fastifyEnv, ENV_OPTIONS);
+app.register(fastifyCookie);
+app.register(fastifySession, SESSION_OPTIONS);
+app.register(cors, CORS_OPTIONS);
+
+app.register(fastifyView, {
+  engine: { ejs },
+  root: path.join(process.cwd(), "views"),
+});
+
+app.register(fastifyStatic, {
+  root: path.join(process.cwd(), "public"),
 });
 
 if (import.meta.env.DEV) {
-  console.log("Development Mode ✅");
+  app.register(loggerHooks);
 }
+
+app.register(cacheHooks);
+app.register(pricesRoutes, { prefix: "/api" });
+
+app.get("/", async (_req: FastifyRequest, _res: FastifyReply) => {
+  return _res.sendFile("index.html");
+});
+
+app.get("/api", async (_req: FastifyRequest, _res: FastifyReply) => {
+  return _res.sendFile("index.html");
+});
+
+app.setNotFoundHandler((_req, _res) => {
+  _req.log.warn(
+    `\x1b[35m\x1b[1m${_req.method}\x1b[39m\x1b[22m \x1b[31m${_req.url}\x1b[39m | Not Found`
+  );
+  return _res.code(404).view("404", { pathname: _req.url });
+});
 
 if (import.meta.env.PROD) {
-  console.log("Production Mode ✅");
-  const PORT = process.env.PORT ?? 3000;
-  app.listen(PORT, () => {
-    console.log(`Server Running On Port ${PORT}`);
-  });
+  (async () => {
+    app.listen(
+      {
+        port: +process.env.PORT! || 3000,
+      },
+      (err, address) => {
+        if (err) {
+          app.log.error(err.message);
+          process.exit(1);
+        } else {
+          console.clear();
+          console.log(
+            `\x1b[30mfastify running at\x1b[39m [\x1b[36m\x1b[1m ${address} \x1b[39m]`
+          );
+        }
+      }
+    );
+  })();
 }
 
-export const viteNodeApp = app; // for vite-node plugin
-export default app; // for vercel deployment
+export const viteNodeApp = app; // for vite-plugin-node
+// export default app; // for vercel deployment
+
+// for vercel deployment
+export default function handler(req: any, res: any) {
+  app.ready((err) => {
+    if (err) {
+      res.statusCode = 500;
+      res.end("Server not ready");
+      return;
+    }
+    app.server.emit("request", req, res);
+  });
+}

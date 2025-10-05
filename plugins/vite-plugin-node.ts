@@ -5,7 +5,7 @@ export const vitePluginNode = () =>
     // Nodejs native Request adapter
     // currently this plugin support 'express', 'nest', 'koa' and 'fastify' out of box,
     // you can also pass a function if you are using other frameworks, see Custom Adapter section
-    adapter: "express",
+    adapter: "fastify",
 
     // tell the plugin where is your project entry
     appPath: "./src/index.ts",
@@ -19,6 +19,10 @@ export const vitePluginNode = () =>
     // Optional, default: false
     // if you want to init your app on boot, set this to true
     initAppOnBoot: false,
+
+    // Optional, default: false
+    // if you want to reload your app on file changes, set this to true, rebounce delay is 500ms
+    reloadAppOnFileChange: true,
 
     // Optional, default: 'esbuild'
     // The TypeScript compiler you want to use

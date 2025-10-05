@@ -10,6 +10,7 @@
       "@/*": ["./src/*"]
     },
     "lib": ["esnext"],
+    "types": ["vite/client"],
 
     /* Modules */
     "rootDir": ".",
@@ -20,7 +21,6 @@
     "noErrorTruncation": true,
 
     /* Emit */
-    "outDir": "./dist",
     "removeComments": true,
     "noEmitOnError": true,
     "verbatimModuleSyntax": true,

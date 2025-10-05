@@ -1,10 +1,17 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./favicon.webp" type="image/x-icon" />
     <title>EGPrices API</title>
     <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
       body {
         background-color: #000;
         display: flex;
@@ -14,17 +21,23 @@
         color: white;
         font-family: sans-serif;
         font-weight: bolder;
-        font-size: 50px;
-        height: 100%;
+        height: 100dvh;
       }
 
       img {
-        width: 170px;
+        width: 180px;
+        filter: drop-shadow(0 0 20px #ef0202);
+      }
+
+      h1 {
+        font-size: 40px;
+        color: #ffd700;
+        text-align: center;
       }
     </style>
   </head>
   <body>
-    <img src="./favicon.png" alt="EGPrices-api-logo" />
-    <p>EGPrices API</p>
+    <img src="./favicon.webp" alt="egprices-logo" />
+    <h1>EGPrices API</h1>
   </body>
 </html>
