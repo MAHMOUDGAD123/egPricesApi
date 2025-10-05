@@ -17,7 +17,7 @@ export const getCachedValue = async (memCache: Cache, cacheKey: string) => {
   const cachedValue = await memCache.get(cacheKey) as string;
 
   if (cachedValue) {
-    return JSON.parse(cachedValue);
+    return cachedValue;
   }
   return null;
 };
