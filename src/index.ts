@@ -26,6 +26,7 @@ import {
 import { cacheHooks } from "@/hooks/cache";
 // routes
 import { pricesRoutes } from "@/router/prices";
+import { isVercel } from "./utils/globals";
 
 const app: FastifyInstance = fastify({
   disableRequestLogging: true,
@@ -68,7 +69,7 @@ app.setNotFoundHandler((_req, _res) => {
   return _res.code(404).view("404", { pathname: _req.url });
 });
 
-if (import.meta.env.PROD) {
+if (!isVercel && import.meta.env.PROD) {
   (async () => {
     app.listen(
       {
