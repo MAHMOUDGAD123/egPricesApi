@@ -21,8 +21,7 @@ export const pricesRoutes = async (app: FastifyInstance) => {
     { config: { cacheKey: "gold", dynamic: false } },
     async (_req, _res) => {
       const replay = await getDataHandler("gold");
-      return _res
-      .status(replay.code).send(replay.data);
+      return _res.status(replay.code).send(replay.data);
     }
   );
 
@@ -40,8 +39,7 @@ export const pricesRoutes = async (app: FastifyInstance) => {
     { config: { cacheKey: "prices", dynamic: false } },
     async (_req, _res) => {
       const replay = await getDataHandler("prices");
-      return _res
-      .status(replay.code).send(replay.data);
+      return _res.status(replay.code).send(replay.data);
     }
   );
 
@@ -52,8 +50,7 @@ export const pricesRoutes = async (app: FastifyInstance) => {
     { config: { cacheKey: "silver", dynamic: false } },
     async (_req, _res) => {
       const replay = await getDataHandler("silver");
-      return _res
-      .status(replay.code).send(replay.data);
+      return _res.status(replay.code).send(replay.data);
     }
   );
 };

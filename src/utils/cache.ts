@@ -14,10 +14,10 @@ export const memCache = createCache({
 });
 
 export const getCachedValue = async (memCache: Cache, cacheKey: string) => {
-  const cachedValue = await memCache.get(cacheKey);
+  const cachedValue = await memCache.get(cacheKey) as string;
 
   if (cachedValue) {
-    return cachedValue;
+    return JSON.parse(cachedValue);
   }
   return null;
 };
