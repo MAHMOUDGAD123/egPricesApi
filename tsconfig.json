@@ -10,7 +10,7 @@
       "@/*": ["./src/*"]
     },
     "lib": ["esnext"],
-    "types": ["vite/client"],
+    "types": ["node", "vite/client"],
 
     /* Modules */
     "rootDir": ".",
