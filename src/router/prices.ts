@@ -22,9 +22,7 @@ export const pricesRoutes = async (app: FastifyInstance) => {
     async (_req, _res) => {
       const replay = await getDataHandler("gold");
       return _res
-        .status(replay.code)
-        .type("application/json")
-        .send(replay.data);
+      .status(replay.code).send(replay.data);
     }
   );
 
@@ -32,7 +30,7 @@ export const pricesRoutes = async (app: FastifyInstance) => {
     Reply: Types.DataType;
   }>("/live", {}, async (_req, _res) => {
     const replay = await getDataHandler("live");
-    return _res.status(replay.code).type("application/json").send(replay.data);
+    return _res.status(replay.code).send(replay.data);
   });
 
   app.get<{
@@ -43,9 +41,7 @@ export const pricesRoutes = async (app: FastifyInstance) => {
     async (_req, _res) => {
       const replay = await getDataHandler("prices");
       return _res
-        .status(replay.code)
-        .type("application/json")
-        .send(replay.data);
+      .status(replay.code).send(replay.data);
     }
   );
 
@@ -57,9 +53,7 @@ export const pricesRoutes = async (app: FastifyInstance) => {
     async (_req, _res) => {
       const replay = await getDataHandler("silver");
       return _res
-        .status(replay.code)
-        .type("application/json")
-        .send(replay.data);
+      .status(replay.code).send(replay.data);
     }
   );
 };
