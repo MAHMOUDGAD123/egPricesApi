@@ -17,7 +17,5 @@ declare namespace NodeJS {
     VERCEL?: "1"; // will be "1" when running on Vercel
     VERCEL_ENV?: "development" | "preview" | "production";
     VERCEL_URL?: string;
-    DATABASE_URL: string;
-    API_KEY?: string;
   }
 }
